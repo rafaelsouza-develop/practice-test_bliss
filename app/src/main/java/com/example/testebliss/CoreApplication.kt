@@ -3,6 +3,7 @@ package com.example.testebliss
 import android.app.Application
 import android.content.Context
 import com.example.testebliss.di.networkModule
+import com.example.testebliss.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -18,7 +19,8 @@ open class CoreApplication : Application() {
             androidContext(context)
             modules(
                 listOf(
-                    networkModule
+                    networkModule,
+                    repositoryModule
                 )
             )
         }
