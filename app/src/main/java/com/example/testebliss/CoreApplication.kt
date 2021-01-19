@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.example.testebliss.di.networkModule
 import com.example.testebliss.di.repositoryModule
+import com.example.testebliss.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -20,7 +21,8 @@ open class CoreApplication : Application() {
             modules(
                 listOf(
                     networkModule,
-                    repositoryModule
+                    repositoryModule,
+                    viewModelModule
                 )
             )
         }
