@@ -1,5 +1,6 @@
 package com.example.testebliss.data.network
 
+import com.example.testebliss.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -18,8 +19,8 @@ class RequestInterceptor {
         okHttp.addInterceptor { chain ->
             var newRequest = chain.request()
             newRequest = newRequest.newBuilder().addHeader(
-                "Authorization",
-                "Bearer "
+                "authorization",
+                "token ${BuildConfig.API_TOKEN}"
             ).build()
             return@addInterceptor chain.proceed(newRequest)
         }
