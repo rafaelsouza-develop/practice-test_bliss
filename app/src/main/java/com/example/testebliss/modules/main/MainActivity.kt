@@ -1,10 +1,12 @@
 package com.example.testebliss.modules.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.example.testebliss.R
 import com.example.testebliss.models.ResponseStatus
+import com.example.testebliss.modules.emojislist.EmojiListActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListners() {
         btnRandomEmoji.setOnClickListener { getRandomEmoji() }
+        btnEmojiList.setOnClickListener { goToEmojiList() }
     }
 
     private fun getRandomEmoji() {
@@ -44,5 +47,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setImageEmoji(emojiUrl: String) {
         Picasso.get().load(emojiUrl).into(ivEmoji)
+    }
+
+    private fun goToEmojiList() {
+        val intent = Intent(this, EmojiListActivity::class.java)
+        startActivity(intent)
     }
 }
