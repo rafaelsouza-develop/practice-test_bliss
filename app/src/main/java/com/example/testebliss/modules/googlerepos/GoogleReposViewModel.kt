@@ -15,7 +15,7 @@ class GoogleReposViewModel(
     private val dispatcherProvider: DispatcherProvider,
     private val googleReposRepository: GoogleReposRepository
 ) : BaseViewModel(dispatcherProvider) {
-
+    var page = 1
     private val _googleReposLiveData =
         MutableLiveData<ViewState<List<GoogleRepos>, ResponseStatus>>()
     val googleReposLiveData: LiveData<ViewState<List<GoogleRepos>, ResponseStatus>> =
@@ -24,14 +24,16 @@ class GoogleReposViewModel(
     fun getGoogleRepos(googleRepo: String) {
         scope.launch(dispatcherProvider.ui) {
             _googleReposLiveData.postValue(ViewState(status = ResponseStatus.LOADING))
-            when (val response = googleReposRepository.getGoogleRepos(googleRepo, 1, 10)) {
+            when (val response = googleReposRepository.getGoogleRepos(googleRepo, page, 10)) {
                 is Result.Success -> {
+                    _googleReposLiveData.postValue(ViewState(status = ResponseStatus.UNLOADING))
                     response.data.takeIf { it.isNotEmpty() }?.let {
+                        page++
                         _googleReposLiveData.postValue(ViewState(it, ResponseStatus.SUCCESS))
                     }
                 }
                 is Result.Failure -> {
-
+                    _googleReposLiveData.postValue(ViewState(status = ResponseStatus.UNLOADING))
                 }
             }
         }

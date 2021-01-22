@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_emoji.view.*
 import kotlinx.android.synthetic.main.item_google_repos.view.*
 
 
-class GoogleReposAdapter(private val googleRepos: List<GoogleRepos>) :
+class GoogleReposAdapter(private val googleRepos: MutableList<GoogleRepos>) :
     RecyclerView.Adapter<GoogleReposAdapter.ViewHolder>() {
 
 
@@ -33,5 +33,15 @@ class GoogleReposAdapter(private val googleRepos: List<GoogleRepos>) :
         }
 
 
+    }
+
+    fun addData(googleRepos: List<GoogleRepos>) {
+        this.googleRepos.addAll(googleRepos)
+        notifyDataSetChanged()
+    }
+
+    fun clearData(){
+        this.googleRepos.clear()
+        notifyDataSetChanged()
     }
 }
