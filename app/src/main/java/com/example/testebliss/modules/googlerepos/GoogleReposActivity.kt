@@ -50,11 +50,9 @@ class GoogleReposActivity : AppCompatActivity() {
             mAdapter.clearData()
             getGoogleRepos()
         }
-
     }
 
     private fun setRecyclerViewList() {
-        swipeRefresh.isRefreshing = false
         with(recyclerGoogleRepos) {
             adapter = mAdapter
             layoutManager = mLayoutManager
@@ -67,11 +65,8 @@ class GoogleReposActivity : AppCompatActivity() {
                         getGoogleRepos()
                     }
                 }
-
             })
         }
-
-
     }
 
     private fun showError() {

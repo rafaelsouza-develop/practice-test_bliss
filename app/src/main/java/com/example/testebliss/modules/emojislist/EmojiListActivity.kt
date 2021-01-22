@@ -19,25 +19,42 @@ class EmojiListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_emoji_list)
         setupObserverViewState(viewModel)
         viewModel.getEmojis()
+        setListners()
+    }
+
+    private fun setListners() {
+        swipeRefresh.setOnRefreshListener {
+            viewModel.getEmojis()
+        }
     }
 
     private fun setupObserverViewState(viewModel: EmojiListViewModel) {
         viewModel.emojisLiveData.observe(this, Observer { viewState ->
             when (viewState.status) {
                 ResponseStatus.SUCCESS -> {
+                    swipeRefresh.isRefreshing = false
                     viewState.data?.let { setRecyclerViewList(it) }
                 }
                 ResponseStatus.ERROR -> {
+                    swipeRefresh.isRefreshing = false
+                }
+                ResponseStatus.UNLOADING -> {
+                    swipeRefresh.isRefreshing = false
+                }
+                ResponseStatus.LOADING -> {
+                    swipeRefresh.isRefreshing = true
+                }
+                ResponseStatus.EMPTY_LIST -> {
+                    swipeRefresh.isRefreshing = false
                 }
             }
         })
     }
 
     private fun setRecyclerViewList(emojiList: List<Emoji>) {
-
         recyclerEmoji.apply {
-            layoutManager = GridLayoutManager(context,4)
-            adapter = EmojiListAdapter(emojiList)
+            layoutManager = GridLayoutManager(context, 4)
+            adapter = EmojiListAdapter(emojiList.toMutableList())
         }
     }
 

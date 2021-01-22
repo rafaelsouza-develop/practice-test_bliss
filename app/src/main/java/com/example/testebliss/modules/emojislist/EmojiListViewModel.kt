@@ -29,7 +29,7 @@ class EmojiListViewModel(
                     }
                 }
                 is Result.Failure -> {
-
+                    _emojisLiveData.postValue(ViewState(status = ResponseStatus.ERROR))
                 }
             }
         }

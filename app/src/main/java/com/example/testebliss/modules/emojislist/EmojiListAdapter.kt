@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_emoji.view.*
 
 
-class EmojiListAdapter(private val emojiList: List<Emoji>) :
+class EmojiListAdapter(private val emojiList: MutableList<Emoji>) :
     RecyclerView.Adapter<EmojiListAdapter.ViewHolder>() {
 
 
@@ -28,6 +28,10 @@ class EmojiListAdapter(private val emojiList: List<Emoji>) :
 
         with(holder.itemView){
             Picasso.get().load(emoji.url).into(ivEmojiList)
+            setOnClickListener {
+                emojiList.removeAt(position)
+                notifyItemRemoved(position)
+            }
         }
 
 
