@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.example.testebliss.R
 import com.example.testebliss.models.ResponseStatus
 import com.example.testebliss.modules.emojislist.EmojiListActivity
+import com.example.testebliss.modules.googlerepos.GoogleReposActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,7 +27,10 @@ class MainActivity : AppCompatActivity() {
     private fun setListners() {
         btnRandomEmoji.setOnClickListener { getRandomEmoji() }
         btnEmojiList.setOnClickListener { goToEmojiList() }
+        btnGoogleRepos.setOnClickListener { goToGoogleRepos() }
     }
+
+
 
     private fun getRandomEmoji() {
         val emoji = viewModel.emojisLiveData.value?.data?.random()
@@ -50,7 +54,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToEmojiList() {
-        val intent = Intent(this, EmojiListActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(this, EmojiListActivity::class.java))
+    }
+
+    private fun goToGoogleRepos() {
+        startActivity(Intent(this, GoogleReposActivity::class.java))
     }
 }

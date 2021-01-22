@@ -4,6 +4,7 @@ import com.example.testebliss.BuildConfig
 import com.example.testebliss.data.network.EmojiConverterFactory
 import com.example.testebliss.data.network.RequestInterceptor
 import com.example.testebliss.data.network.services.EmojiService
+import com.example.testebliss.data.network.services.GoogleReposService
 import com.example.testebliss.models.EmojiList
 import com.google.gson.GsonBuilder
 import org.koin.dsl.module
@@ -24,4 +25,5 @@ val networkModule = module {
     }
 
     single { get<Retrofit>().create(EmojiService::class.java) }
+    single { get<Retrofit>().create(GoogleReposService::class.java) }
 }

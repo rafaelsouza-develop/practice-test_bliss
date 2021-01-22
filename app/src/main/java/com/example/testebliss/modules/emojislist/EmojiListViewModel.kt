@@ -7,7 +7,7 @@ import com.example.testebliss.base.ViewState
 import com.example.testebliss.data.network.Result
 import com.example.testebliss.models.Emoji
 import com.example.testebliss.models.ResponseStatus
-import com.example.testebliss.repository.EmojiRepository
+import com.example.testebliss.repository.emoji.EmojiRepository
 import com.example.testebliss.util.DispatcherProvider
 import kotlinx.coroutines.launch
 
