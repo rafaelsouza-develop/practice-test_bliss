@@ -10,7 +10,7 @@ interface EmojiDao {
     fun getAllEmojis(): List<Emoji>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertEmoji(vararg emoji: Emoji)
+    fun insertEmoji(emoji: Emoji)
 
     @Update
     fun updateEmoji(emoji: Emoji)

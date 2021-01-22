@@ -25,13 +25,13 @@ class MainViewModel(
             _emojisLiveData.postValue(ViewState(status = ResponseStatus.LOADING))
             when (val response = emojiRepository.getEmojis()) {
                 is Result.Success -> {
+                    response.data.takeIf { it.emojiList.isNotEmpty() }?.let {
 
-
+                    }
                 }
                 is Result.Failure -> {
 
                 }
-
             }
         }
     }
