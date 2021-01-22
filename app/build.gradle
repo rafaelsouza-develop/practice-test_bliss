@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -69,4 +70,7 @@ dependencies {
 
     //Room
     implementation "androidx.room:room-ktx:2.2.6"
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

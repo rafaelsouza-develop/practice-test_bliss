@@ -26,7 +26,7 @@ class MainViewModel(
             when (val response = emojiRepository.getEmojis()) {
                 is Result.Success -> {
                     response.data.takeIf { it.emojiList.isNotEmpty() }?.let {
-
+                        _emojisLiveData.postValue(ViewState(it.emojiList, ResponseStatus.SUCCESS))
                     }
                 }
                 is Result.Failure -> {
