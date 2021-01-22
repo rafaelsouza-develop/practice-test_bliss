@@ -28,8 +28,12 @@ class MainActivity : AppCompatActivity() {
         btnRandomEmoji.setOnClickListener { getRandomEmoji() }
         btnEmojiList.setOnClickListener { goToEmojiList() }
         btnGoogleRepos.setOnClickListener { goToGoogleRepos() }
+        btnSeachRepo.setOnClickListener { searchRepoByUsername(edtNameRepo.text.toString()) }
     }
 
+    private fun searchRepoByUsername(username: String?) {
+        username.takeIf { it!!.isNotEmpty() }?.let { viewModel.getRepoByUser(it) }
+    }
 
 
     private fun getRandomEmoji() {
@@ -42,6 +46,16 @@ class MainActivity : AppCompatActivity() {
             when (viewState.status) {
                 ResponseStatus.SUCCESS -> {
                     setImageEmoji(viewState.data?.firstOrNull()?.url!!)
+                }
+                ResponseStatus.ERROR -> {
+                }
+            }
+        })
+
+        viewModel.repoUserLiveData.observe(this, Observer { viewState ->
+            when (viewState.status) {
+                ResponseStatus.SUCCESS -> {
+                    setImageEmoji(viewState.data?.avatarUrl!!)
                 }
                 ResponseStatus.ERROR -> {
                 }

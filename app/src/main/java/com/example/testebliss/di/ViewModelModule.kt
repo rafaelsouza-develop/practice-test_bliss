@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     factory { DispatcherProvider() }
-    factory { MainViewModel(get(), get()) }
+    factory { MainViewModel(get(), get(), get()) }
     factory { EmojiListViewModel(get(), get()) }
     factory { GoogleReposViewModel(get(), get()) }
 }
