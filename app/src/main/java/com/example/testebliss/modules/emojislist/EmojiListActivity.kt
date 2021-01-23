@@ -53,10 +53,13 @@ class EmojiListActivity : AppCompatActivity() {
 
     private fun setRecyclerViewList(emojiList: List<Emoji>) {
         recyclerEmoji.apply {
-            layoutManager = GridLayoutManager(context, 4)
+            layoutManager = GridLayoutManager(context, SPAN_COUNT_ADAPTER)
             adapter = EmojiListAdapter(emojiList.toMutableList())
         }
     }
 
+    companion object{
+        const val SPAN_COUNT_ADAPTER = 4
+    }
 
 }

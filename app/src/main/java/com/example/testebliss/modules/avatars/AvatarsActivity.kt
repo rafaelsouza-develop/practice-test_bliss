@@ -45,12 +45,16 @@ class AvatarsActivity : AppCompatActivity(), AvatarsAdapter.AvatarAdapterListner
 
     private fun setRecyclerViewList(repos: List<RepoUserName>) {
         recyclerAvatars.apply {
-            layoutManager = GridLayoutManager(context, 4)
+            layoutManager = GridLayoutManager(context, SPAN_COUNT_ADAPTER)
             adapter = AvatarsAdapter(repos, this@AvatarsActivity)
         }
     }
 
     override fun onRemoveBD(avatar: RepoUserName) {
         viewModel.onRemoveBD(avatar)
+    }
+
+    companion object{
+        const val SPAN_COUNT_ADAPTER = 4
     }
 }
