@@ -76,4 +76,8 @@ dependencies {
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Tests
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "io.mockk:mockk:1.10.0"
 }
