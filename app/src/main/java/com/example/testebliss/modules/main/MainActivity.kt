@@ -1,19 +1,22 @@
 package com.example.testebliss.modules.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.testebliss.R
+import com.example.testebliss.base.BaseActivity
 import com.example.testebliss.models.ResponseStatus
 import com.example.testebliss.modules.avatars.AvatarsActivity
 import com.example.testebliss.modules.emojislist.EmojiListActivity
 import com.example.testebliss.modules.googlerepos.GoogleReposActivity
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_emoji_list.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : BaseActivity() {
 
     private val viewModel: MainViewModel by viewModel()
 
@@ -44,24 +47,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupObserverViewState(viewModel: MainViewModel) {
         viewModel.emojisLiveData.observe(this, Observer { viewState ->
-            when (viewState.status) {
-                ResponseStatus.SUCCESS -> {
-                    setImageEmoji(viewState.data?.random()?.url!!)
-                }
-                ResponseStatus.ERROR -> {
-                }
+            if (viewState.status == ResponseStatus.SUCCESS) {
+                setImageEmoji(viewState.data?.random()?.url!!)
             }
+            else if (viewState.status == ResponseStatus.ERROR) { showError() }
         })
 
         viewModel.repoUserLiveData.observe(this, Observer { viewState ->
-            when (viewState.status) {
-                ResponseStatus.SUCCESS -> {
-                    setImageEmoji(viewState.data?.avatarUrl!!)
-                }
-                ResponseStatus.ERROR -> {
-                }
-            }
+            if (viewState.status == ResponseStatus.SUCCESS) { setImageEmoji(viewState.data?.avatarUrl!!) }
+            else if (viewState.status == ResponseStatus.ERROR) { showError() }
         })
+    }
+
+    private fun showError() {
+        swipeRefresh.isRefreshing = false
+        showDialogError("Sorry!", "I'm down! Try again.")
     }
 
     private fun setImageEmoji(emojiUrl: String) {
@@ -79,4 +79,5 @@ class MainActivity : AppCompatActivity() {
     private fun goToAvatarList() {
         startActivity(Intent(this, AvatarsActivity::class.java))
     }
+
 }

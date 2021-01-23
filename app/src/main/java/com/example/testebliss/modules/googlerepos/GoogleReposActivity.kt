@@ -7,11 +7,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testebliss.R
+import com.example.testebliss.base.BaseActivity
 import com.example.testebliss.models.ResponseStatus
 import kotlinx.android.synthetic.main.activity_google_repos.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class GoogleReposActivity : AppCompatActivity() {
+class GoogleReposActivity : BaseActivity() {
 
     private val viewModel: GoogleReposViewModel by viewModel()
     private lateinit var mLayoutManager: LinearLayoutManager
@@ -70,7 +71,7 @@ class GoogleReposActivity : AppCompatActivity() {
 
     private fun showError() {
         swipeRefresh.isRefreshing = false
-        Toast.makeText(this, "Sorry! I'm down! Try again.", Toast.LENGTH_LONG).show()
+        showDialogError("Sorry!", "I'm down! Try again.")
     }
 
     private fun getGoogleRepos() {
