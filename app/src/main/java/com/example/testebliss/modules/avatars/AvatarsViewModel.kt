@@ -18,13 +18,21 @@ class AvatarsViewModel(private val dispatcherProvider: DispatcherProvider) :
 
     fun getAvatars() {
         scope.launch(dispatcherProvider.io) {
-           val reposList = database?.reposDao()?.getAllRepos()
+            val reposList = database?.reposDao()?.getAllRepos()
             reposList.takeIf { it!!.isNotEmpty() }?.let {
                 _reposLiveData.postValue(ViewState(reposList, ResponseStatus.SUCCESS))
-            }?: run {
+            } ?: run {
                 _reposLiveData.postValue(ViewState(status = ResponseStatus.EMPTY_LIST))
             }
 
+        }
+    }
+
+    fun onRemoveBD(avatar: RepoUserName) {
+        _reposLiveData.postValue(ViewState(status = ResponseStatus.LOADING))
+        scope.launch(dispatcherProvider.io) {
+            database?.reposDao()?.deleteRepo(avatar)
+            _reposLiveData.postValue(ViewState(status =  ResponseStatus.UNLOADING))
         }
     }
 }

@@ -9,7 +9,11 @@ import com.example.testebliss.models.RepoUserName
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_avatar.view.*
 
-class AvatarsAdapter(private val avatars: List<RepoUserName>): RecyclerView.Adapter<AvatarsAdapter.ViewHolder>() {
+class AvatarsAdapter(
+    private val avatars: List<RepoUserName>,
+    private val listner: AvatarAdapterListners
+) :
+    RecyclerView.Adapter<AvatarsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -21,10 +25,16 @@ class AvatarsAdapter(private val avatars: List<RepoUserName>): RecyclerView.Adap
     override fun getItemCount(): Int = avatars.count()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       val avatar = avatars[position]
-        with(holder.itemView){
+        val avatar = avatars[position]
+        with(holder.itemView) {
             Picasso.get().load(avatar.avatarUrl).into(ivAvatar)
+            ivAvatar.setOnClickListener { listner.onRemoveBD(avatar) }
         }
 
+    }
+
+    interface AvatarAdapterListners {
+
+        fun onRemoveBD(avatar: RepoUserName)
     }
 }

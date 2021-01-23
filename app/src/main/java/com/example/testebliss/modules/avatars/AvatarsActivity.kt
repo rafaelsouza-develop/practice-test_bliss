@@ -8,9 +8,11 @@ import com.example.testebliss.R
 import com.example.testebliss.models.RepoUserName
 import com.example.testebliss.models.ResponseStatus
 import kotlinx.android.synthetic.main.activity_avatars.*
+import kotlinx.android.synthetic.main.activity_avatars.swipeRefresh
+import kotlinx.android.synthetic.main.activity_emoji_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AvatarsActivity : AppCompatActivity() {
+class AvatarsActivity : AppCompatActivity(), AvatarsAdapter.AvatarAdapterListners {
 
     private val viewModel: AvatarsViewModel by viewModel()
 
@@ -18,6 +20,7 @@ class AvatarsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_avatars)
         setupObserverViewState(viewModel)
+        setListners()
         viewModel.getAvatars()
     }
 
@@ -25,17 +28,29 @@ class AvatarsActivity : AppCompatActivity() {
         viewModel.reposLiveData.observe(this, Observer { viewState ->
             when (viewState.status) {
                 ResponseStatus.SUCCESS -> {
+                    swipeRefresh.isRefreshing = false
                     setRecyclerViewList(viewState.data!!)
                 }
-
+                ResponseStatus.LOADING -> swipeRefresh.isRefreshing = true
+                ResponseStatus.UNLOADING -> swipeRefresh.isRefreshing = false
             }
         })
+    }
+
+    private fun setListners() {
+        swipeRefresh.setOnRefreshListener {
+            viewModel.getAvatars()
+        }
     }
 
     private fun setRecyclerViewList(repos: List<RepoUserName>) {
         recyclerAvatars.apply {
             layoutManager = GridLayoutManager(context, 4)
-            adapter = AvatarsAdapter(repos)
+            adapter = AvatarsAdapter(repos, this@AvatarsActivity)
         }
+    }
+
+    override fun onRemoveBD(avatar: RepoUserName) {
+        viewModel.onRemoveBD(avatar)
     }
 }
