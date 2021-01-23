@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Teste Bliss</string>
+
+    <!-- Main Activity -->
+    <string name="main_activity_label_button_random_emoji">Random Emoji</string>
+    <string name="main_activity_label_button_emoji_list">Emoji List</string>
+    <string name="main_activity_hing_insert_github_username">Insert github username</string>
+    <string name="main_activity_label_button_avatar_list">Avatar List</string>
+    <string name="main_activity_label_button_google_repos">Google repos</string>
+
+    <!-- Main Activity -->
 </resources>
