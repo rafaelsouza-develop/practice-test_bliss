@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.emojisLiveData.observe(this, Observer { viewState ->
             when (viewState.status) {
                 ResponseStatus.SUCCESS -> {
-                    setImageEmoji(viewState.data?.firstOrNull()?.url!!)
+                    setImageEmoji(viewState.data?.random()?.url!!)
                 }
                 ResponseStatus.ERROR -> {
                 }
