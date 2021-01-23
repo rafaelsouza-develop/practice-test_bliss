@@ -54,7 +54,7 @@ class EmojiListActivity : BaseActivity() {
 
     private fun showError() {
         swipeRefresh.isRefreshing = false
-        showDialogError("Sorry!", "I'm down! Try again.")
+        showDialogError(getString(R.string.message_error_title_sorry), getString(R.string.message_error_imdown))
     }
 
     private fun setRecyclerViewList(emojiList: List<Emoji>) {

@@ -54,7 +54,10 @@ class AvatarsActivity : BaseActivity(), AvatarsAdapter.AvatarAdapterListners {
 
     private fun showError() {
         swipeRefresh.isRefreshing = false
-        showDialogError("Sorry!", "I'm down! Try again.")
+        showDialogError(
+            getString(R.string.message_error_title_sorry),
+            getString(R.string.message_error_imdown)
+        )
     }
 
     override fun onRemoveBD(avatar: RepoUserName) {

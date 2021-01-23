@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.testebliss.R
 import com.example.testebliss.base.BaseActivity
+import com.example.testebliss.extensions.hideKeyboard
 import com.example.testebliss.models.ResponseStatus
 import com.example.testebliss.modules.avatars.AvatarsActivity
 import com.example.testebliss.modules.emojislist.EmojiListActivity
@@ -33,7 +34,12 @@ class MainActivity : BaseActivity() {
         btnEmojiList.setOnClickListener { goToEmojiList() }
         btnGoogleRepos.setOnClickListener { goToGoogleRepos() }
         btnAvatarList.setOnClickListener { goToAvatarList() }
-        btnSeachRepo.setOnClickListener { searchRepoByUsername(edtNameRepo.text.toString()) }
+        btnSeachRepo.setOnClickListener {
+            val repo = edtNameRepo.text.toString()
+            searchRepoByUsername(repo)
+            hideKeyboard(it)
+            edtNameRepo.setText("")
+        }
     }
 
     private fun searchRepoByUsername(username: String?) {
@@ -49,19 +55,23 @@ class MainActivity : BaseActivity() {
         viewModel.emojisLiveData.observe(this, Observer { viewState ->
             if (viewState.status == ResponseStatus.SUCCESS) {
                 setImageEmoji(viewState.data?.random()?.url!!)
+            } else if (viewState.status == ResponseStatus.ERROR) {
+                showError()
             }
-            else if (viewState.status == ResponseStatus.ERROR) { showError() }
         })
 
         viewModel.repoUserLiveData.observe(this, Observer { viewState ->
-            if (viewState.status == ResponseStatus.SUCCESS) { setImageEmoji(viewState.data?.avatarUrl!!) }
-            else if (viewState.status == ResponseStatus.ERROR) { showError() }
+            if (viewState.status == ResponseStatus.SUCCESS) {
+                setImageEmoji(viewState.data?.avatarUrl!!)
+            } else if (viewState.status == ResponseStatus.ERROR) {
+                showError()
+            }
         })
     }
 
     private fun showError() {
         swipeRefresh.isRefreshing = false
-        showDialogError("Sorry!", "I'm down! Try again.")
+        showDialogError(getString(R.string.message_error_title_sorry), getString(R.string.message_error_imdown))
     }
 
     private fun setImageEmoji(emojiUrl: String) {

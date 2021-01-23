@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testebliss.R
 import com.example.testebliss.base.BaseActivity
+import com.example.testebliss.extensions.haveConnection
 import com.example.testebliss.models.ResponseStatus
 import kotlinx.android.synthetic.main.activity_google_repos.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -71,11 +72,19 @@ class GoogleReposActivity : BaseActivity() {
 
     private fun showError() {
         swipeRefresh.isRefreshing = false
-        showDialogError("Sorry!", "I'm down! Try again.")
+        showDialogError(getString(R.string.message_error_title_sorry), getString(R.string.message_error_imdown))
     }
 
     private fun getGoogleRepos() {
-        viewModel.getGoogleRepos(googleRepo = GOOGLE_REPO)
+        if(haveConnection()){
+            viewModel.getGoogleRepos(googleRepo = GOOGLE_REPO)
+        }else{
+            showDialogError(
+                getString(R.string.message_error_title_sorry),
+                getString(R.string.message_error_no_connection)
+            )
+        }
+
     }
 
     companion object {
