@@ -2,7 +2,6 @@ package com.example.testebliss.modules.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.testebliss.CoreApplication
 import com.example.testebliss.CoreApplication.Companion.database
 import com.example.testebliss.base.BaseViewModel
 import com.example.testebliss.base.ViewState
@@ -35,13 +34,13 @@ class MainViewModel(
             if (emojiList!!.isEmpty()) {
                 when (val response = emojiRepository.getEmojis()) {
                     is Result.Success -> {
-                        response.data.takeIf { it.emojiList.isNotEmpty() }?.let {
-                            it.emojiList.forEach {
-                                database?.emojiDao()?.insertEmoji(it)
+                        response.data.takeIf { it.emojiList.isNotEmpty() }?.let { emojiList ->
+                            emojiList.emojiList.forEach { emoji ->
+                                database?.emojiDao()?.insertEmoji(emoji)
                             }
                             _emojisLiveData.postValue(
                                 ViewState(
-                                    it.emojiList,
+                                    emojiList.emojiList,
                                     ResponseStatus.SUCCESS
                                 )
                             )
@@ -59,11 +58,10 @@ class MainViewModel(
                     )
                 )
             }
-
         }
     }
 
-    fun getRepoByUser(username: String){
+    fun getRepoByUser(username: String) {
         scope.launch(dispatcherProvider.io) {
             when (val response = repoUserNameRepository.getRepoByUserName(username)) {
                 is Result.Success -> {

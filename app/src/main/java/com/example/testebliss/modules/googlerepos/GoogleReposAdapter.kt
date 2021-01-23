@@ -5,10 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testebliss.R
-import com.example.testebliss.models.Emoji
 import com.example.testebliss.models.GoogleRepos
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_emoji.view.*
 import kotlinx.android.synthetic.main.item_google_repos.view.*
 
 

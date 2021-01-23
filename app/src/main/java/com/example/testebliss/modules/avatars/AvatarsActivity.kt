@@ -8,8 +8,6 @@ import com.example.testebliss.R
 import com.example.testebliss.models.RepoUserName
 import com.example.testebliss.models.ResponseStatus
 import kotlinx.android.synthetic.main.activity_avatars.*
-import kotlinx.android.synthetic.main.activity_avatars.swipeRefresh
-import kotlinx.android.synthetic.main.activity_emoji_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AvatarsActivity : AppCompatActivity(), AvatarsAdapter.AvatarAdapterListners {

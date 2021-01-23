@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testebliss.R
-import com.example.testebliss.models.GoogleRepos
 import com.example.testebliss.models.ResponseStatus
 import kotlinx.android.synthetic.main.activity_google_repos.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

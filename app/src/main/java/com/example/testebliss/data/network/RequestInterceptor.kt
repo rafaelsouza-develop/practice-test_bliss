@@ -13,7 +13,6 @@ class RequestInterceptor {
     }
 
     fun setupOkHttp(): OkHttpClient.Builder {
-       // credentialsDao = CredentialsDaoImpl(App4PetsApplication.context)
         val okHttp = OkHttpClient.Builder()
         okHttp.addInterceptor(logger())
         okHttp.addInterceptor { chain ->
@@ -26,4 +25,5 @@ class RequestInterceptor {
         }
         return okHttp
     }
+
 }

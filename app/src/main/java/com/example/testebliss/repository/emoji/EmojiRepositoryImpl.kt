@@ -3,7 +3,6 @@ package com.example.testebliss.repository.emoji
 import com.example.testebliss.data.network.Result
 import com.example.testebliss.data.network.services.EmojiService
 import com.example.testebliss.models.EmojiList
-import com.example.testebliss.repository.emoji.EmojiRepository
 
 class EmojiRepositoryImpl(private val emojiService: EmojiService) :
     EmojiRepository {

@@ -2,7 +2,6 @@ package com.example.testebliss.modules.emojislist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.testebliss.CoreApplication
 import com.example.testebliss.CoreApplication.Companion.database
 import com.example.testebliss.base.BaseViewModel
 import com.example.testebliss.base.ViewState
@@ -28,13 +27,13 @@ class EmojiListViewModel(
             if (emojiList!!.isEmpty()) {
                 when (val response = emojiRepository.getEmojis()) {
                     is Result.Success -> {
-                        response.data.takeIf { it.emojiList.isNotEmpty() }?.let {
-                            it.emojiList.forEach {
-                                database?.emojiDao()?.insertEmoji(it)
+                        response.data.takeIf { it.emojiList.isNotEmpty() }?.let { emojiList ->
+                            emojiList.emojiList.forEach { emoji ->
+                                database?.emojiDao()?.insertEmoji(emoji)
                             }
                             _emojisLiveData.postValue(
                                 ViewState(
-                                    it.emojiList,
+                                    emojiList.emojiList,
                                     ResponseStatus.SUCCESS
                                 )
                             )
