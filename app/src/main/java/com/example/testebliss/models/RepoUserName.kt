@@ -1,11 +1,16 @@
 package com.example.testebliss.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-data class RepoUserName (
-    var id: String,
+@Entity(tableName = "repos_user_name")
+data class RepoUserName(
 
-    @SerializedName("lgin")
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+
+    @SerializedName("login")
     var login: String,
 
     @SerializedName("avatar_url")

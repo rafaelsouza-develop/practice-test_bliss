@@ -15,12 +15,14 @@ open class CoreApplication : Application() {
     companion object {
         var database: AppDataBase? = null
     }
+
     override fun onCreate() {
         super.onCreate()
         database = Room.databaseBuilder(
             baseContext,
             AppDataBase::class.java,
-            "database.db").build()
+            "database.db"
+        ).fallbackToDestructiveMigration().build()
         setupApp(baseContext)
 
 

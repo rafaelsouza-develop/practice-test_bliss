@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.example.testebliss.R
 import com.example.testebliss.models.ResponseStatus
+import com.example.testebliss.modules.avatars.AvatarsActivity
 import com.example.testebliss.modules.emojislist.EmojiListActivity
 import com.example.testebliss.modules.googlerepos.GoogleReposActivity
 import com.squareup.picasso.Picasso
@@ -28,13 +29,13 @@ class MainActivity : AppCompatActivity() {
         btnRandomEmoji.setOnClickListener { getRandomEmoji() }
         btnEmojiList.setOnClickListener { goToEmojiList() }
         btnGoogleRepos.setOnClickListener { goToGoogleRepos() }
+        btnAvatarList.setOnClickListener { goToAvatarList() }
         btnSeachRepo.setOnClickListener { searchRepoByUsername(edtNameRepo.text.toString()) }
     }
 
     private fun searchRepoByUsername(username: String?) {
         username.takeIf { it!!.isNotEmpty() }?.let { viewModel.getRepoByUser(it) }
     }
-
 
     private fun getRandomEmoji() {
         val emoji = viewModel.emojisLiveData.value?.data?.random()
@@ -73,5 +74,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToGoogleRepos() {
         startActivity(Intent(this, GoogleReposActivity::class.java))
+    }
+
+    private fun goToAvatarList() {
+        startActivity(Intent(this, AvatarsActivity::class.java))
     }
 }

@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TesteBliss">
+        <activity android:name=".modules.avatars.AvatarsActivity"/>
         <activity android:name=".modules.googlerepos.GoogleReposActivity" />
         <activity android:name=".modules.emojislist.EmojiListActivity" />
         <activity android:name=".modules.main.MainActivity">

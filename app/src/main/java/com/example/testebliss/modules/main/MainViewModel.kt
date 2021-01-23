@@ -3,6 +3,7 @@ package com.example.testebliss.modules.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.testebliss.CoreApplication
+import com.example.testebliss.CoreApplication.Companion.database
 import com.example.testebliss.base.BaseViewModel
 import com.example.testebliss.base.ViewState
 import com.example.testebliss.data.network.Result
@@ -30,13 +31,13 @@ class MainViewModel(
     fun getEmojis() {
         scope.launch(dispatcherProvider.io) {
             _emojisLiveData.postValue(ViewState(status = ResponseStatus.LOADING))
-            val emojiList = CoreApplication.database?.emojiDao()?.getAllEmojis()
+            val emojiList = database?.emojiDao()?.getAllEmojis()
             if (emojiList!!.isEmpty()) {
                 when (val response = emojiRepository.getEmojis()) {
                     is Result.Success -> {
                         response.data.takeIf { it.emojiList.isNotEmpty() }?.let {
                             it.emojiList.forEach {
-                                CoreApplication.database?.emojiDao()?.insertEmoji(it)
+                                database?.emojiDao()?.insertEmoji(it)
                             }
                             _emojisLiveData.postValue(
                                 ViewState(
@@ -63,10 +64,11 @@ class MainViewModel(
     }
 
     fun getRepoByUser(username: String){
-        scope.launch(dispatcherProvider.ui) {
+        scope.launch(dispatcherProvider.io) {
             when (val response = repoUserNameRepository.getRepoByUserName(username)) {
                 is Result.Success -> {
-                    response.data?.let {
+                    response.data.let {
+                        database?.reposDao()?.insertRepo(it)
                         _repoUserLiveData.postValue(ViewState(it, ResponseStatus.SUCCESS))
                     }
                 }
